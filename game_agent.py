@@ -41,11 +41,8 @@ def custom_score(game, player):
     if game.is_winner(player):
         return float("inf")
 
-    total = 0
-    for move in game.get_legal_moves():
-        total += len(game.forecast_move(move).get_legal_moves(player))
-
-    return float(total)
+    opp_total = len(game.get_legal_moves(game.get_opponent(player)))
+    return float(-opp_total)
 
 
 def custom_score_2(game, player):
@@ -76,10 +73,9 @@ def custom_score_2(game, player):
     if game.is_winner(player):
         return float("inf")
 
-    loc = game.get_player_location(player)
-    c = (int(game.width / 2), int(game.height / 2))
-    x, y = (loc[0] - c[0], loc[1] - c[1])
-    return float(-math.sqrt(x * x + y * y))
+    w, h = game.width / 2., game.height / 2.
+    y, x = game.get_player_location(player)
+    return float(random.random() * ((h - y)**2 + (w - x)**2))
 
 
 def custom_score_3(game, player):
@@ -110,15 +106,10 @@ def custom_score_3(game, player):
     if game.is_winner(player):
         return float("inf")
 
-    loc = game.get_player_location(player)
-    corners = [
-        (0, 0),
-        (game.width - 1, 0),
-        (0, game.height - 1),
-        (game.width - 1, game.height - 1)
-    ]
-    v = min([math.sqrt((loc[0] - c[0]) * (loc[0] - c[0]) + (loc[1] - c[1]) * (loc[1] - c[1])) for c in corners])
-    return float(v)
+    own_moves = len(game.get_legal_moves(player))
+    opp_moves = len(game.get_legal_moves(game.get_opponent(player)))
+    r = random.random()
+    return float((1 - r) * own_moves - r * opp_moves)
 
 
 class IsolationPlayer:
