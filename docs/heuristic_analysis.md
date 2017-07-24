@@ -32,4 +32,11 @@ I tried 100 attempts. Using a random number like `custom_store3` rather than a s
            Win Rate:      67.7%        65.3%        68.0%        72.4%
 ```
 
+## Conclusion
+
+It is good to choose AB_Custom_3 for the following reasons.
+
+- Just the number of own the number of moves available or the distance from the center is not enough as an evaluation value.
+- It seems good to use the number of move available opponent and own.
+- It is better to add random elements
 
